@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react' 
 import Filtro from '../Filtro';
+import { useNavigate } from "react-router-dom";
 import './style.css'
 
 function Lista() {
@@ -15,6 +16,7 @@ function Lista() {
         const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=1025`);
         const json = await res.json();
         setData(json.results);
+        console.log(data)
       } else {
         const res = await fetch(`https://pokeapi.co/api/v2/type/${tipoSeleccionado}`);
         const json = await res.json();
@@ -30,6 +32,21 @@ function Lista() {
     setTipoSeleccionado(tipo);
   };
 
+  let resultados = data;
+
+
+  if (busqueda.length >= 3 && isNaN(busqueda)) {
+    resultados = data.filter(pokemon =>
+      pokemon.name.toLowerCase().includes(busqueda.toLowerCase())
+    );
+  }
+  console.log(data)
+
+  if (!isNaN(busqueda)) {
+    resultados = data.filter(pokemon =>
+      pokemon.url.includes('/' + busqueda)
+    );
+  }
 
 
   return (
@@ -43,7 +60,7 @@ function Lista() {
       />
     <Filtro onTipoChange={handleTipoChange} />
       <section className='c-lista'>
-        {data.map((pokemon, index) => (
+        {resultados.map((pokemon, index) => (
           <div className='c-lista-pokemon'
 
           key={index}>
