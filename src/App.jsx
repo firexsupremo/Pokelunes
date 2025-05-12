@@ -1,5 +1,6 @@
 import { useState } from 'react' 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { AppProvider } from './Contexto/Contexto';
 import Lista from './componentes/Lista'
 import Capturados from './componentes/Capturados'
 import Favoritos from './componentes/Favoritos'
@@ -8,12 +9,15 @@ import Usuarios from './componentes/Usuarios'
 import Pokemon from './componentes/Pokemon'
 import Menu from './componentes/Menu'
 
+
 import './App.css'
 
 
 function App() {
   
   return (
+
+   <AppProvider>
     <Router>
         <Menu />
         
@@ -27,8 +31,9 @@ function App() {
 
        </Routes>
 
-       
+
   </Router>
+  </AppProvider>
 );
 }
 
